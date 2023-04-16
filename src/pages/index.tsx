@@ -9,7 +9,7 @@ export default function Home() {
       <header className="p-2 m-2 h-10 font-extrabold uppercase text-3xl">
         Routine Center
       </header>
-      <main className="overflow-auto">
+      <main className="overflow-y-auto overflow-x-hidden">
         <Tile time="5:00 AM" name="Wake Up"></Tile>
         <Tile time="6:00 AM" name="Gym"></Tile>
         <Tile time="7:00 AM" name="1st Meal"></Tile>
