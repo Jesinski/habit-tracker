@@ -1,15 +1,15 @@
-import Footer from "@/components/Footer";
+import Content from "@/components/Content";
+import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 import Tile from "@/components/Tile";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className="flex flex-col h-screen">
-      <header className="flex-none p-2 m-2 h-10 font-extrabold uppercase text-3xl ">
-        Routine Center
-      </header>
-      <main className="overflow-y-auto overflow-x-hidden grow">
+    <Layout>
+      <Header title="Routine Center" />
+      <Content>
         <Tile time="5:00 AM" name="Wake Up"></Tile>
         <Tile time="6:00 AM" name="Gym"></Tile>
         <Tile time="7:00 AM" name="1st Meal"></Tile>
@@ -20,8 +20,7 @@ export default function Home() {
         <Tile time="7:15 PM" name="5th Meal"></Tile>
         <Tile time="7:00 PM" name="1st Meal"></Tile>
         <Tile time="9:00 PM" name="Sleep"></Tile>
-      </main>
-      <Footer />
-    </div>
+      </Content>
+    </Layout>
   );
 }

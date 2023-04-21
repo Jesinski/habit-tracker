@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BiHome, BiTachometer } from "react-icons/bi";
+import { TbTargetArrow } from "react-icons/tb";
 
 export default function Footer() {
   return (
@@ -11,6 +12,10 @@ export default function Footer() {
       <Link href="/progress" className="flex flex-col justify-center">
         <BiTachometer size={24} className="self-center flexgrow" />
         <button className="bg-transparent text-xs">Progress</button>
+      </Link>
+      <Link href="/goals" className="flex flex-col justify-center">
+        <TbTargetArrow size={24} className="self-center flexgrow" />
+        <button className="bg-transparent text-xs">Goals</button>
       </Link>
     </footer>
   );

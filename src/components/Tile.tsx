@@ -9,17 +9,15 @@ export default function Tile(props: { name: string; time: string }) {
   const [transition, setTransition] = useState({
     transition: "none",
   });
-
   const [bgColor, setBgColor] = useState({
     backgroundColor: "none",
   });
+
   const handlers = useSwipeable({
     onSwipedLeft: (eventData) => {
-      console.log("Failed task!", eventData.event.target);
       setBgColor({ backgroundColor: "red" });
     },
     onSwipedRight: (eventData) => {
-      console.log("Completed task!", eventData.event.target);
       setBgColor({ backgroundColor: "green" });
     },
   });

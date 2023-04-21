@@ -2,10 +2,10 @@ import Content from "@/components/Content";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 
-export default function Progress() {
+export default function Goals() {
   return (
     <Layout>
-      <Header title="Progress" />
+      <Header title="Goals" />
       <Content>
         <span></span>
       </Content>
