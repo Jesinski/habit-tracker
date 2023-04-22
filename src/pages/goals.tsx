@@ -8,6 +8,10 @@ export default function Goals() {
       <Header title="Goals" />
       <Content>
         <div className="flex flex-col p-2 space-y-4">
+          <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-50 rounded-md h-12 px-2">
+            <span className=" text-2xl font-semibold">Overall</span>
+            <span className=" text-2xl font-semibold">80%</span>
+          </div>
           <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-200 rounded-md h-12 px-2">
             <span className=" text-2xl font-semibold">Sleep</span>
             <span className=" text-2xl font-semibold">80%</span>
@@ -24,11 +28,8 @@ export default function Goals() {
             <span className=" text-2xl font-semibold">Water</span>
             <span className=" text-2xl font-semibold">95%</span>
           </div>
-          <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-50 rounded-md h-12 px-2">
-            <span className=" text-2xl font-semibold">Overall</span>
-            <span className=" text-2xl font-semibold">80%</span>
-          </div>
         </div>
+
         <div className="border-b-2 border-black my-4" />
 
         <div className="flex flex-col space-y-2">
