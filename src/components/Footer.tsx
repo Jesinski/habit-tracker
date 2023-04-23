@@ -17,6 +17,10 @@ export default function Footer() {
         <TbTargetArrow size={24} className="self-center flexgrow" />
         <button className="bg-transparent text-xs">Goals</button>
       </Link>
+      <Link href="/temp" className="flex flex-col justify-center">
+        <TbTargetArrow size={24} className="self-center flexgrow" />
+        <button className="bg-transparent text-xs">temp</button>
+      </Link>
     </footer>
   );
 }
