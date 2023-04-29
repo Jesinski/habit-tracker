@@ -35,7 +35,7 @@ export default function Tile(props: { name: string; time: string }) {
     setLeft(0);
   };
 
-  const move = (e: PointerEvent) => {
+  const onPointerMove = (e: PointerEvent) => {
     e.preventDefault();
     const currentX = e.pageX;
     setLeft(currentLeft + currentX - startX);
@@ -47,7 +47,7 @@ export default function Tile(props: { name: string; time: string }) {
       <div
         style={{ left: left, ...transition, ...bgColor }}
         onPointerDown={onPointerDown}
-        onPointerMove={move}
+        onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         {...handlers}
         className="flex justify-between relative touch-none bg-blue-200 rounded-xl"
