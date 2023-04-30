@@ -1,6 +1,7 @@
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
+import Link from "next/link";
 
 export default function Goals() {
   return (
@@ -20,10 +21,12 @@ export default function Goals() {
             <span className=" text-2xl font-semibold">Workout</span>
             <span className=" text-2xl font-semibold">60%</span>
           </div>
-          <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-100 rounded-md h-12 px-2">
-            <span className=" text-2xl font-semibold">Nutrition</span>
-            <span className=" text-2xl font-semibold">90%</span>
-          </div>
+          <Link href="/goals/nutrition">
+            <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-100 rounded-md h-12 px-2">
+              <span className=" text-2xl font-semibold">Nutrition</span>
+              <span className=" text-2xl font-semibold">90%</span>
+            </div>
+          </Link>
           <div className="flex items-center justify-between border-b-2 border-gray-400 bg-green-600 rounded-md h-12 px-2">
             <span className=" text-2xl font-semibold">Water</span>
             <span className=" text-2xl font-semibold">95%</span>
