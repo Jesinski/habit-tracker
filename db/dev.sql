@@ -1,4 +1,7 @@
 drop table tasks;
+
+create database app;
+create schema tracker;
 create TABLE tasks (
     id          SERIAL PRIMARY KEY,
     name        text not NULL,
