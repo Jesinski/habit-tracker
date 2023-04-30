@@ -1,7 +1,13 @@
+import formatTime from "@/lib/formatTime";
+import getTileColor from "@/lib/getTileColor";
+import mutateFetcher from "@/lib/mutateFetcher";
+import { tasks } from "@prisma/client";
 import { PointerEvent, useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import useSWRMutation from "swr/mutation";
+export default function Tile(props: { task: tasks }) {
+  const { trigger } = useSWRMutation("/api/putTask", mutateFetcher);
 
-export default function Tile(props: { name: string; time: string }) {
   const [left, setLeft] = useState(0);
   const [currentLeft, setCurrentLeft] = useState(0);
   const [startX, setStartX] = useState(0);
@@ -10,15 +16,17 @@ export default function Tile(props: { name: string; time: string }) {
     transition: "none",
   });
   const [bgColor, setBgColor] = useState({
-    backgroundColor: "none",
+    backgroundColor: getTileColor(props.task.completed),
   });
 
   const handlers = useSwipeable({
-    onSwipedLeft: (eventData) => {
+    onSwipedLeft: () => {
+      trigger({ id: props.task.id, completed: -1 });
       setBgColor({ backgroundColor: "red" });
     },
-    onSwipedRight: (eventData) => {
+    onSwipedRight: () => {
       setBgColor({ backgroundColor: "green" });
+      trigger({ id: props.task.id, completed: 1 });
     },
   });
 
@@ -43,17 +51,17 @@ export default function Tile(props: { name: string; time: string }) {
 
   return (
     <section className={`p-2 mx-2 my-2`}>
-      <span className="my-1 text-xl"> {props.time} </span>
+      <span className="my-1 text-xl"> {formatTime(props.task.time)} </span>
       <div
         style={{ left: left, ...transition, ...bgColor }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         {...handlers}
-        className="flex justify-between relative touch-none bg-blue-200 rounded-xl"
+        className="flex justify-between relative touch-none bg-blue-200 rounded-lg"
       >
-        <span className="p-1 m-2 text-2xl">{props.name}</span>
-        <span className="p-1 m-2 text-lg">Category</span>
+        <span className="p-1 m-2 text-2xl">{props.task.name}</span>
+        <span className="p-1 m-2 text-lg">{props.task.category}</span>
       </div>
     </section>
   );
