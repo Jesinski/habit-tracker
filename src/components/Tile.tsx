@@ -1,4 +1,4 @@
-import formatTime from "@/lib/formatTime";
+import formatDatetime from "@/lib/formatDatetime";
 import getTileColor from "@/lib/getTileColor";
 import mutateFetcher from "@/lib/mutateFetcher";
 import { tasks } from "@prisma/client";
@@ -51,7 +51,9 @@ export default function Tile(props: { task: tasks }) {
 
   return (
     <section className={`p-2 mx-2 my-2`}>
-      <span className="my-1 text-xl"> {formatTime(props.task.time)} </span>
+      <span className="my-1 text-xl">
+        {formatDatetime(props.task.datetime)}
+      </span>
       <div
         style={{ left: left, ...transition, ...bgColor }}
         onPointerDown={onPointerDown}

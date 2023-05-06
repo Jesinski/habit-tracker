@@ -11,6 +11,6 @@ model tasks {
   id        Int      @id @default(autoincrement())
   name      String
   category  String
-  time      DateTime @db.Timetz(6)
+  datetime  DateTime @db.Timestamptz(6)
   completed Int      @default(0)
 }
