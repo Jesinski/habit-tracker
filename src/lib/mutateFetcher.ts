@@ -1,9 +1,9 @@
-export default async function mutateFetcher(
+export default async function mutateFetcher<T>(
   url: string,
-  { arg }: { arg: { id: number; completed: number } }
+  { arg }: { arg: T }
 ) {
-  return fetch(url, {
+  return await fetch(url, {
     method: "POST",
     body: JSON.stringify(arg),
-  }).then((res) => res.json());
+  });
 }

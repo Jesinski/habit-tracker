@@ -5,8 +5,11 @@ import { tasks } from "@prisma/client";
 import { PointerEvent, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import useSWRMutation from "swr/mutation";
+
+export type UpdateTask = { id: number; completed: number };
+
 export default function Tile(props: { task: tasks }) {
-  const { trigger } = useSWRMutation("/api/putTask", mutateFetcher);
+  const { trigger } = useSWRMutation("/api/putTask", mutateFetcher<UpdateTask>);
 
   const [left, setLeft] = useState(0);
   const [currentLeft, setCurrentLeft] = useState(0);
