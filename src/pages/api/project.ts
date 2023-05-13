@@ -31,7 +31,8 @@ export default async function handler(
         const newTask: Omit<tasks, "id"> = {
           name: task.name,
           datetime: start
-            .plus({ days: i, hours: time.hour, minutes: time.minute })
+            .set({ hour: time.hour, minute: time.minute })
+            .plus({ days: i })
             .toJSDate(),
           category: task.category,
           completed: task.completed,
