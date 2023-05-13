@@ -1,6 +1,7 @@
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
+import NewProject from "@/components/NewProject";
 import Tile from "@/components/Tile";
 import fetcher from "@/lib/fetcher";
 import { tasks } from "@prisma/client";
@@ -17,9 +18,13 @@ export default function Home() {
     <Layout>
       <Header title="Routine Center" />
       <Content>
-        {data?.map((task, index) => {
-          return <Tile key={index} task={task} />;
-        })}
+        {data?.length! <= 0 ? (
+          <NewProject />
+        ) : (
+          data?.map((task, index) => {
+            return <Tile key={index} task={task} />;
+          })
+        )}
       </Content>
     </Layout>
   );

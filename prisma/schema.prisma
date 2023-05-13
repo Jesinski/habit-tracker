@@ -13,4 +13,14 @@ model tasks {
   category  String
   datetime  DateTime @db.Timestamptz(6)
   completed Int      @default(0)
+  projectid Int
+  projects  projects @relation(fields: [projectid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model projects {
+  id        Int      @id @default(autoincrement())
+  startdate DateTime @db.Date
+  enddate   DateTime @db.Date
+  length    Int
+  tasks     tasks[]
 }
