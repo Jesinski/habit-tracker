@@ -1,7 +1,7 @@
 import mutateFetcher from "@/lib/mutateFetcher";
+import Router from "next/router";
 import { BaseSyntheticEvent } from "react";
 import useSWRMutation from "swr/mutation";
-
 type NewProjectFormData = {
   startDate: HTMLInputElement;
   endDate: HTMLInputElement;
@@ -20,28 +20,44 @@ export default function NewProject() {
 
   const createNewProject = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    const data = e.target.elements as NewProjectFormData;
+    const formData = e.target.elements as NewProjectFormData;
     trigger({
-      startDate: data.startDate.value,
-      endDate: data.endDate.value,
+      startDate: formData.startDate.value,
+      endDate: formData.endDate.value,
+    }).then((res) => {
+      if (res?.ok) {
+        Router.reload();
+      }
     });
   };
 
   return (
-    <section className="p-2 m-2 flex flex-col">
-      <span>No active projects!</span>
-      <span>Create a project to track your habits!</span>
-      <span>
+    <section className="p-2 m-2 flex flex-col space-y-2">
+      <span className="text-xl">No active projects!</span>
+      <span className="text-xl">Create a project to track your habits!</span>
+      <span className="text-xl">
         A Project consist of a pre-determined period of time, that you will use
         it as a reference of health improvement
       </span>
 
-      <form className="flex flex-col" onSubmit={createNewProject}>
-        <label htmlFor="startDate">Start Date</label>
+      <form
+        className="flex flex-col space-y-2 py-4"
+        onSubmit={createNewProject}
+      >
+        <label className="text-xl" htmlFor="startDate">
+          Start Date
+        </label>
         <input id="startDate" type="date" required />
-        <label htmlFor="endDate">End Date</label>
+        <label className="text-xl" htmlFor="endDate">
+          End Date
+        </label>
         <input id="endDate" type="date" required />
-        <button type="submit">Create new Project!</button>
+        <button
+          type="submit"
+          className="border-2 border-black rounded-md py-2 text-xl"
+        >
+          Create new Project!
+        </button>
       </form>
     </section>
   );
