@@ -3,25 +3,28 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import NewProject from "@/components/NewProject";
 import Tile from "@/components/Tile";
-import fetcher from "@/lib/fetcher";
 import { tasks } from "@prisma/client";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 
-import useSWR from "swr";
+const DATA: tasks[] = [
+  {
+    id: 1,
+    name: "Chest Day",
+    category: "Workout",
+    datetime: new Date(),
+    completed: 1,
+    projectid: 2,
+  },
+];
+
 export default function Home() {
-  const { data, isLoading } = useSWR<tasks[]>("/api/tasks", fetcher);
-
-  if (isLoading) return "isLoading";
-
   return (
     <Layout>
       <Header title="Routine Center" />
       <Content>
-        {data?.length! <= 0 ? (
+        {DATA?.length! <= 0 ? (
           <NewProject />
         ) : (
-          data?.map((task, index) => {
+          DATA?.map((task, index) => {
             return <Tile key={index} task={task} />;
           })
         )}

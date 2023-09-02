@@ -1,16 +1,12 @@
 import formatDatetime from "@/lib/formatDatetime";
 import getTileColor from "@/lib/getTileColor";
-import mutateFetcher from "@/lib/mutateFetcher";
 import { tasks } from "@prisma/client";
 import { PointerEvent, useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import useSWRMutation from "swr/mutation";
 
 export type UpdateTask = { id: number; completed: number };
 
 export default function Tile(props: { task: tasks }) {
-  const { trigger } = useSWRMutation("/api/putTask", mutateFetcher<UpdateTask>);
-
   const [left, setLeft] = useState(0);
   const [currentLeft, setCurrentLeft] = useState(0);
   const [startX, setStartX] = useState(0);
@@ -24,12 +20,12 @@ export default function Tile(props: { task: tasks }) {
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      trigger({ id: props.task.id, completed: -1 });
+      alert({ id: props.task.id, completed: -1 });
       setBgColor({ backgroundColor: "red" });
     },
     onSwipedRight: () => {
       setBgColor({ backgroundColor: "green" });
-      trigger({ id: props.task.id, completed: 1 });
+      alert({ id: props.task.id, completed: 1 });
     },
   });
 

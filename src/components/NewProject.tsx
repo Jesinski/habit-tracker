@@ -1,7 +1,4 @@
-import mutateFetcher from "@/lib/mutateFetcher";
-import Router from "next/router";
 import { BaseSyntheticEvent } from "react";
-import useSWRMutation from "swr/mutation";
 type NewProjectFormData = {
   startDate: HTMLInputElement;
   endDate: HTMLInputElement;
@@ -13,21 +10,12 @@ export type NewProjectData = {
 };
 
 export default function NewProject() {
-  const { trigger } = useSWRMutation(
-    "/api/project",
-    mutateFetcher<NewProjectData>
-  );
-
   const createNewProject = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const formData = e.target.elements as NewProjectFormData;
-    trigger({
+    alert({
       startDate: formData.startDate.value,
       endDate: formData.endDate.value,
-    }).then((res) => {
-      if (res?.ok) {
-        Router.reload();
-      }
     });
   };
 
