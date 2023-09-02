@@ -1,13 +1,13 @@
 "use client";
 import formatDatetime from "@/lib/formatDatetime";
 import getTileColor from "@/lib/getTileColor";
-import { tasks } from "@prisma/client";
+import { Tables } from "@/types/database.types";
 import { PointerEvent, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 export type UpdateTask = { id: number; completed: number };
 
-export default function Tile(props: { task: tasks }) {
+export default function Tile(props: { task: Tables<"tasks"> }) {
   const [left, setLeft] = useState(0);
   const [currentLeft, setCurrentLeft] = useState(0);
   const [startX, setStartX] = useState(0);
