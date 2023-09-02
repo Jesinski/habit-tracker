@@ -1,3 +1,4 @@
+"use client";
 import formatDatetime from "@/lib/formatDatetime";
 import getTileColor from "@/lib/getTileColor";
 import { tasks } from "@prisma/client";
@@ -50,9 +51,7 @@ export default function Tile(props: { task: tasks }) {
 
   return (
     <section className={`p-2 mx-2 my-2`}>
-      <span className="my-1 text-xl">
-        {formatDatetime(props.task.datetime)}
-      </span>
+      <span className="my-1 text-xl">{formatDatetime(props.task.time)}</span>
       <div
         style={{ left: left, ...transition, ...bgColor }}
         onPointerDown={onPointerDown}
