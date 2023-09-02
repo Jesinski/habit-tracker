@@ -4,7 +4,7 @@ import { TbTargetArrow } from "react-icons/tb";
 
 export default function Footer() {
   return (
-    <footer className="fixed flex-none bottom-0 flex justify-around h-14 max-h-14 w-full bg-gray-200">
+    <footer className="sticky flex-none bottom-0 flex justify-around h-14 max-h-14 w-full bg-gray-200">
       <Link href="/" className="flex flex-col justify-center">
         <BiHome size={24} className="self-center flexgrow" />
         <button className="bg-transparent text-xs">Home</button>
