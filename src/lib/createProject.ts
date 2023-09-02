@@ -15,7 +15,7 @@ export default async function createProject(data: NewProjectData) {
   const end = DateTime.fromISO(data.endDate);
   const diff = end.diff(start, "days").days;
 
-  const t = await supabase
+  const { data: newProject, error: newProjectError } = await supabase
     .from("projects")
     .insert({
       start_date: data.startDate,
@@ -24,7 +24,11 @@ export default async function createProject(data: NewProjectData) {
     .select()
     .single();
 
-  console.log(t.data!.id);
+  if (!newProject || newProjectError) {
+    console.log(newProjectError);
+    throw new Error("Could not create project");
+  }
+
   const tasks = [];
   for (let i = 0; i < diff; i++) {
     for (const task of DAILY_TEMPLATE) {
@@ -37,15 +41,16 @@ export default async function createProject(data: NewProjectData) {
           .toISO()!,
         category: task.category,
         completed: task.completed,
-        project_id: t.data!.id,
+        project_id: newProject.id,
       };
-      console.log(newTask);
       tasks.push(newTask);
     }
   }
 
-  const t2 = await supabase.from("tasks").insert(tasks);
+  const { error: tasksError } = await supabase.from("tasks").insert(tasks);
 
-  console.log(t2);
-  return t;
+  if (tasksError) {
+    console.log(tasksError);
+    throw new Error("Could not create tasks");
+  }
 }

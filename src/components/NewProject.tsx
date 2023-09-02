@@ -17,10 +17,14 @@ export default function NewProject() {
     e.preventDefault();
     const formData = e.target.elements as NewProjectFormData;
 
-    const t = await createProject({
-      startDate: formData.startDate.value,
-      endDate: formData.endDate.value,
-    });
+    try {
+      await createProject({
+        startDate: formData.startDate.value,
+        endDate: formData.endDate.value,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

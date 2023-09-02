@@ -1,6 +1,7 @@
 "use client";
 import formatDatetime from "@/lib/formatDatetime";
 import getTileColor from "@/lib/getTileColor";
+import updateTask from "@/lib/updateTask";
 import { Tables } from "@/types/database.types";
 import { PointerEvent, useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -20,13 +21,13 @@ export default function Tile(props: { task: Tables<"tasks"> }) {
   });
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      alert({ id: props.task.id, completed: -1 });
+    onSwipedLeft: async () => {
       setBgColor({ backgroundColor: "red" });
+      await updateTask({ id: props.task.id, completed: -1 });
     },
-    onSwipedRight: () => {
+    onSwipedRight: async () => {
       setBgColor({ backgroundColor: "green" });
-      alert({ id: props.task.id, completed: 1 });
+      await updateTask({ id: props.task.id, completed: 1 });
     },
   });
 
