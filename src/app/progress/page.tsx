@@ -7,7 +7,7 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 ChartJS.defaults.font.size = 16;
 
-export const data = {
+const data = {
   labels: ["Done", "Missed", "To Go"],
   datasets: [
     {
