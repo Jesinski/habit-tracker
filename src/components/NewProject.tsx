@@ -1,3 +1,6 @@
+"use client";
+
+import createProject from "@/lib/createProject";
 import { BaseSyntheticEvent } from "react";
 type NewProjectFormData = {
   startDate: HTMLInputElement;
@@ -10,10 +13,11 @@ export type NewProjectData = {
 };
 
 export default function NewProject() {
-  const createNewProject = (e: BaseSyntheticEvent) => {
+  const createNewProject = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const formData = e.target.elements as NewProjectFormData;
-    alert({
+
+    const t = await createProject({
       startDate: formData.startDate.value,
       endDate: formData.endDate.value,
     });
