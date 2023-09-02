@@ -1,11 +1,18 @@
+"use client";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
-import Layout from "@/components/Layout";
 import NewProject from "@/components/NewProject";
 import Tile from "@/components/Tile";
-import { tasks } from "@prisma/client";
 
-const DATA: tasks[] = [
+const DATA = [
+  {
+    id: 1,
+    name: "Chest Day",
+    category: "Workout",
+    datetime: new Date(),
+    completed: 1,
+    projectid: 2,
+  },
   {
     id: 1,
     name: "Chest Day",
@@ -16,9 +23,9 @@ const DATA: tasks[] = [
   },
 ];
 
-export default function Home() {
+export default function Page() {
   return (
-    <Layout>
+    <>
       <Header title="Routine Center" />
       <Content>
         {DATA?.length! <= 0 ? (
@@ -29,6 +36,6 @@ export default function Home() {
           })
         )}
       </Content>
-    </Layout>
+    </>
   );
 }

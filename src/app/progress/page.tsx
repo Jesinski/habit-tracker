@@ -1,11 +1,12 @@
+"use client";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
-import Layout from "@/components/Layout";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 ChartJS.defaults.font.size = 16;
+
 export const data = {
   labels: ["Done", "Missed", "To Go"],
   datasets: [
@@ -27,9 +28,9 @@ export const data = {
   ],
 };
 
-export default function Progress() {
+export default function Page() {
   return (
-    <Layout>
+    <>
       <Header title="Progress" />
       <Content>
         <div className="flex flex-col space-y-2">
@@ -79,6 +80,6 @@ export default function Progress() {
           </div>
         </div>
       </Content>
-    </Layout>
+    </>
   );
 }
