@@ -1,7 +1,8 @@
+"use client";
+
 import Content from "@/components/Content";
 import GoalTile from "@/components/GoalTile";
 import Header from "@/components/Header";
-import Layout from "@/components/Layout";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -12,7 +13,7 @@ const MEALS = [
   { time: "4:00 PM", name: "4th Meal" },
   { time: "7:00 PM", name: "5th Meal" },
 ];
-export default function Nutrition() {
+export default function Page() {
   const [meals, setMeals] = useState(MEALS);
 
   const [newMealName, setNewMealName] = useState("");
@@ -22,7 +23,7 @@ export default function Nutrition() {
     setMeals([...meals, { name: newMealName, time: newMealTime }]);
   };
   return (
-    <Layout>
+    <>
       <Header title="Nutrition" />
       <Content>
         {meals.map((meal) => {
@@ -44,6 +45,6 @@ export default function Nutrition() {
           <AiOutlinePlus size={30} onClick={addNewMeal} />
         </form>
       </Content>
-    </Layout>
+    </>
   );
 }

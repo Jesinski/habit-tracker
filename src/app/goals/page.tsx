@@ -1,11 +1,11 @@
+"use client";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
-import Layout from "@/components/Layout";
 import Link from "next/link";
 
-export default function Goals() {
+export default function Page() {
   return (
-    <Layout>
+    <>
       <Header title="Goals" />
       <Content>
         <div className="flex flex-col p-2 space-y-4">
@@ -57,6 +57,6 @@ export default function Goals() {
           </span>
         </div>
       </Content>
-    </Layout>
+    </>
   );
 }
