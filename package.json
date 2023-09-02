@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
     "generate-types": "supabase gen types typescript --project-id heiqniglkasrlnirftdi > src/types/database-generated.types.ts"
   },
   "dependencies": {

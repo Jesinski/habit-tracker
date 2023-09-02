@@ -123,8 +123,20 @@ const DATA = [
 
 export default async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies });
-
-  const { data } = await supabase.from("tasks").select().order("time");
+  const tomorrow = new Date();
+  const yesterday = new Date();
+  const { data } = await supabase
+    .from("tasks")
+    .select()
+    .lte(
+      "time",
+      new Date(tomorrow.setDate(tomorrow.getDate() + 1)).toISOString()
+    )
+    .gte(
+      "time",
+      new Date(yesterday.setDate(yesterday.getDate() - 1)).toISOString()
+    )
+    .order("time");
   console.log(data);
   return (
     <>
