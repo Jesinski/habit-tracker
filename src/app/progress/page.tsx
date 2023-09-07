@@ -1,7 +1,8 @@
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import ProgressTile from "@/components/ProgressTile";
-import getNutritionProgress from "@/lib/getProgressData";
+import getCategoryProgress from "@/lib/getCategoryProgress";
+import getNutritionProgress from "@/lib/getNutritionProgress";
 
 const data = {
   labels: ["Done", "Missed", "To Go"],
@@ -26,6 +27,8 @@ const data = {
 
 export default async function Page() {
   const nutritionData = await getNutritionProgress();
+  const workoutData = await getCategoryProgress("Workout");
+  const waterData = await getCategoryProgress("Water");
   return (
     <>
       <Header title="Progress" />
@@ -33,9 +36,9 @@ export default async function Page() {
         <div className="flex flex-col space-y-2">
           {/* <ProgressTile name="Overall" data={data} /> */}
           {/* <ProgressTile name="Sleep" data={data} /> */}
-          {/* <ProgressTile name="Workout" data={data} /> */}
           <ProgressTile name="Nutrition" data={nutritionData} />
-          {/* <ProgressTile name="Water" data={data} /> */}
+          <ProgressTile name="Workout" data={workoutData} />
+          <ProgressTile name="Water" data={waterData} />
         </div>
 
         <div className="border-b-2 border-black my-4" />

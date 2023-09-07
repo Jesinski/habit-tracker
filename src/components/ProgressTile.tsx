@@ -46,16 +46,14 @@ export default function ProgressTile({ name, data }: Props) {
       <div className="flex justify-between">
         <span className="m-2 text-l font-semibold">
           Current %{" "}
-          {((data.data[0] * 100) / (data.data[0] + data.data[1])).toPrecision(
-            2
-          )}
+          {((data.data[0] * 100) / (data.data[0] + data.data[1])).toFixed(0)}
         </span>
         <span className="m-2 text-l font-semibold">
           Best Possible %{" "}
           {(
             ((data.data[0] + data.data[2]) * 100) /
             data.data.reduce((i, j) => i + j)
-          ).toPrecision(2)}
+          ).toFixed(0)}
         </span>
       </div>
     </div>

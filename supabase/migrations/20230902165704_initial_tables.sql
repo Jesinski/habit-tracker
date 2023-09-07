@@ -29,3 +29,17 @@ CREATE OR REPLACE FUNCTION public.get_nutrition_progress(
     group by DATE(time), completed
     having COUNT(id) = 5
 $function$;
+
+CREATE OR REPLACE FUNCTION public.get_category_progress(
+    category text,
+    project_id text
+) RETURNS TABLE (
+    count integer,
+    completed integer
+) LANGUAGE sql AS $function$
+  select COUNT(id), completed
+  from public.tasks
+  where category = get_category_progress.category
+    and project_id::text = get_category_progress.project_id
+  group by completed;
+$function$;
