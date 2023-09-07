@@ -1,11 +1,7 @@
-"use client";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-ChartJS.defaults.font.size = 16;
+import ProgressTile from "@/components/ProgressTile";
+import getNutritionProgress from "@/lib/getProgressData";
 
 const data = {
   labels: ["Done", "Missed", "To Go"],
@@ -28,32 +24,18 @@ const data = {
   ],
 };
 
-export default function Page() {
+export default async function Page() {
+  const nutritionData = await getNutritionProgress();
   return (
     <>
       <Header title="Progress" />
       <Content>
         <div className="flex flex-col space-y-2">
-          <div className="p-6">
-            <span className="m-2 text-xl font-bold">Overall</span>
-            <Doughnut data={data} />
-          </div>
-          <div className="p-6">
-            <span className="m-2 text-xl font-bold">Sleep</span>
-            <Doughnut data={data} />
-          </div>
-          <div className="p-6">
-            <span className="m-2 text-xl font-bold">Workout</span>
-            <Doughnut data={data} />
-          </div>
-          <div className="p-6">
-            <span className="m-2 text-xl font-bold">Nutrition</span>
-            <Doughnut data={data} />
-          </div>
-          <div className="p-6">
-            <span className="m-2 text-xl font-bold">Water</span>
-            <Doughnut data={data} />
-          </div>
+          {/* <ProgressTile name="Overall" data={data} /> */}
+          {/* <ProgressTile name="Sleep" data={data} /> */}
+          {/* <ProgressTile name="Workout" data={data} /> */}
+          <ProgressTile name="Nutrition" data={nutritionData} />
+          {/* <ProgressTile name="Water" data={data} /> */}
         </div>
 
         <div className="border-b-2 border-black my-4" />
@@ -83,3 +65,30 @@ export default function Page() {
     </>
   );
 }
+
+/*
+-- Workout
+select COUNT(completed), completed
+from public.tasks
+where category = 'Workout'
+group by completed;
+
+-- Water
+select COUNT(completed), completed
+from public.tasks
+where category = 'Water'
+group by completed;
+
+-- Sleep
+select COUNT(completed), completed, name
+from public.tasks
+where category = 'Sleep'
+group by completed, name;
+
+-- Nutrition
+select COUNT(id), DATE(time)
+from public.tasks
+where category = 'Nutrition' and completed = 1
+group by DATE(time), completed
+having COUNT(id) = 5
+*/
