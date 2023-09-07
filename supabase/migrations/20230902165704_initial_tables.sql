@@ -59,3 +59,15 @@ CREATE OR REPLACE FUNCTION public.get_category_progress(
     and project_id::text = get_category_progress.project_id
   group by completed;
 $function$;
+
+CREATE OR REPLACE FUNCTION public.get_overall_progress(
+    project_id text
+) RETURNS TABLE (
+    count integer,
+    completed integer
+) LANGUAGE sql AS $function$
+  select COUNT(id), completed
+  from public.tasks
+  where project_id::text = get_overall_progress.project_id
+  group by completed;
+$function$;
