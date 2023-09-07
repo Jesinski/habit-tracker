@@ -30,6 +30,22 @@ CREATE OR REPLACE FUNCTION public.get_nutrition_progress(
     having COUNT(id) = 5
 $function$;
 
+CREATE OR REPLACE FUNCTION public.get_sleep_progress(
+    -- start_date timestamp without time zone,
+    -- end_date timestamp without time zone,
+    project_id text
+) RETURNS TABLE (
+    date text
+) LANGUAGE sql AS $function$
+    select DATE(time)::text
+    from public.tasks
+    where category = 'Sleep'
+      and completed = 1
+      and project_id::text = get_sleep_progress.project_id
+    group by DATE(time), completed
+    having COUNT(id) = 2
+$function$;
+
 CREATE OR REPLACE FUNCTION public.get_category_progress(
     category text,
     project_id text

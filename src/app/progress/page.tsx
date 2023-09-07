@@ -3,39 +3,25 @@ import Header from "@/components/Header";
 import ProgressTile from "@/components/ProgressTile";
 import getCategoryProgress from "@/lib/getCategoryProgress";
 import getNutritionProgress from "@/lib/getNutritionProgress";
-
-const data = {
-  labels: ["Done", "Missed", "To Go"],
-  datasets: [
-    {
-      label: "# of days",
-      data: [22, 14, 9],
-      backgroundColor: [
-        "rgba(24, 132, 37, 0.4)",
-        "rgba(171, 13, 13, 0.4)",
-        "rgba(130, 129, 129, 0.4)",
-      ],
-      borderColor: [
-        "rgba(24, 132, 37, 1)",
-        "rgba(171, 13, 13, 1)",
-        "rgba(130, 129, 129, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+import getSleepProgress from "@/lib/getSleepProgress";
 
 export default async function Page() {
   const nutritionData = await getNutritionProgress();
   const workoutData = await getCategoryProgress("Workout");
   const waterData = await getCategoryProgress("Water");
+  const sleepData = await getSleepProgress();
+
+  console.log(nutritionData);
+  console.log(workoutData);
+  console.log(waterData);
+  console.log(sleepData);
   return (
     <>
       <Header title="Progress" />
       <Content>
         <div className="flex flex-col space-y-2">
           {/* <ProgressTile name="Overall" data={data} /> */}
-          {/* <ProgressTile name="Sleep" data={data} /> */}
+          <ProgressTile name="Sleep" data={sleepData} />
           <ProgressTile name="Nutrition" data={nutritionData} />
           <ProgressTile name="Workout" data={workoutData} />
           <ProgressTile name="Water" data={waterData} />
