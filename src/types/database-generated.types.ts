@@ -66,7 +66,41 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_category_progress: {
+        Args: {
+          category: string
+          project_id: string
+        }
+        Returns: {
+          count: number
+          completed: number
+        }[]
+      }
+      get_nutrition_progress: {
+        Args: {
+          project_id: string
+        }
+        Returns: {
+          date: string
+        }[]
+      }
+      get_overall_progress: {
+        Args: {
+          project_id: string
+        }
+        Returns: {
+          count: number
+          completed: number
+        }[]
+      }
+      get_sleep_progress: {
+        Args: {
+          project_id: string
+        }
+        Returns: {
+          date: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
