@@ -1,5 +1,5 @@
 "use client";
-import loginWithEmail from "@/lib/login";
+import signUpWithEmail from "@/lib/signup";
 import { BaseSyntheticEvent, useState } from "react";
 
 type LoginFormData = {
@@ -9,16 +9,16 @@ type LoginFormData = {
 export default function Page() {
   const [error, setError] = useState<boolean>(false);
 
-  const signInWithEmail = async (e: BaseSyntheticEvent) => {
+  const signUp = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const formData = e.target.elements as LoginFormData;
 
     try {
-      const loggedUser = await loginWithEmail(
+      const newUser = await signUpWithEmail(
         formData.email.value,
         formData.password.value
       );
-      console.log(loggedUser);
+      console.log(newUser);
     } catch (err) {
       console.log(err);
       setError(true);
@@ -28,8 +28,8 @@ export default function Page() {
   return (
     <>
       <h1> Health Tracker </h1>
-      <h2> Login </h2>
-      <form className="w-[50vw] flex flex-col gap-3" onSubmit={signInWithEmail}>
+      <h2> Sign Up </h2>
+      <form className="w-[50vw] flex flex-col gap-3" onSubmit={signUp}>
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
           <input id="email" className="pl-1" />
@@ -49,16 +49,16 @@ export default function Page() {
           type="submit"
           className=" bg-green-400 w-full hover:bg-green-700"
         >
-          Sign In
+          Sign Up
         </button>
-      </form>
 
-      <div className="mt-3 w-full text-center flex flex-col">
-        <span>Don&apos;t have an account yet? </span>
-        <a className=" text-green-800 underline" href="/signup">
-          Sign Up Now
-        </a>
-      </div>
+        <div className="mt-3 w-full text-center flex flex-col">
+          <span>Have an account?</span>
+          <a className=" text-green-800 underline" href="/login">
+            Sign In Now
+          </a>
+        </div>
+      </form>
     </>
   );
 }
