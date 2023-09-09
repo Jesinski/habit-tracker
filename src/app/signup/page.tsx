@@ -1,5 +1,6 @@
 "use client";
-import signUpWithEmail from "@/lib/signup";
+import { Database } from "@/types/database-generated.types";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent, useState } from "react";
 
@@ -10,18 +11,22 @@ type LoginFormData = {
 export default function Page() {
   const [error, setError] = useState<boolean>(false);
   const { push } = useRouter();
+  const supabase = createClientComponentClient<Database>();
 
-  const signUp = async (e: BaseSyntheticEvent) => {
+  const handleSignUp = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
     const formData = e.target.elements as LoginFormData;
 
     try {
-      const newUser = await signUpWithEmail(
-        formData.email.value,
-        formData.password.value
-      );
-      console.log(newUser);
-      push("/");
+      const newUser = await supabase.auth.signUp({
+        email: formData.email.value,
+        password: formData.password.value,
+        options: {
+          emailRedirectTo: `${location.origin}/auth/callback`,
+        },
+      });
+      push("/"); // Should redirect to page asking to confirm email
     } catch (err) {
       console.log(err);
       setError(true);
@@ -32,7 +37,7 @@ export default function Page() {
     <>
       <h1> Health Tracker </h1>
       <h2> Sign Up </h2>
-      <form className="w-[50vw] flex flex-col gap-3" onSubmit={signUp}>
+      <form className="w-[50vw] flex flex-col gap-3" onSubmit={handleSignUp}>
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
           <input name="email" className="pl-1" />
