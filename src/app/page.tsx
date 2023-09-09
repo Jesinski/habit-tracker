@@ -1,4 +1,5 @@
 import Content from "@/components/Content";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import NewProject from "@/components/NewProject";
 import Tile from "@/components/Tile";
@@ -35,6 +36,7 @@ export default async function Page() {
           })
         )}
       </Content>
+      <Footer />
     </>
   );
 }
