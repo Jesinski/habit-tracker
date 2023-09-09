@@ -1,5 +1,6 @@
 "use client";
 import signUpWithEmail from "@/lib/signup";
+import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent, useState } from "react";
 
 type LoginFormData = {
@@ -8,6 +9,7 @@ type LoginFormData = {
 };
 export default function Page() {
   const [error, setError] = useState<boolean>(false);
+  const { push } = useRouter();
 
   const signUp = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ export default function Page() {
         formData.password.value
       );
       console.log(newUser);
+      push("/");
     } catch (err) {
       console.log(err);
       setError(true);
@@ -41,7 +44,7 @@ export default function Page() {
         </div>
 
         <span hidden={!error} className="text-red-600 self-center">
-          Invalid Credentials
+          An Issue Occurred! Damn!
         </span>
 
         <button
