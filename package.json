@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.3.0",
+    "encoding": "^0.1.13",
     "eslint-config-next": "^13.4.19"
   }
 }
