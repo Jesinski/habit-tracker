@@ -32,12 +32,12 @@ export default function Page() {
       <form className="w-[50vw] flex flex-col gap-3" onSubmit={signUp}>
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
-          <input id="email" className="pl-1" />
+          <input name="email" className="pl-1" />
         </div>
 
         <div className="flex flex-col">
           <label htmlFor="password">Senha</label>
-          <input id="password" type="password" className="pl-1" />
+          <input name="password" type="password" className="pl-1" />
         </div>
 
         <span hidden={!error} className="text-red-600 self-center">
