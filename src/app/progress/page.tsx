@@ -5,8 +5,20 @@ import getCategoryProgress from "@/lib/getCategoryProgress";
 import getNutritionProgress from "@/lib/getNutritionProgress";
 import getOverallProgress from "@/lib/getOverallProgress";
 import getSleepProgress from "@/lib/getSleepProgress";
+import { Database } from "@/types/database-generated.types";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    redirect("/login");
+  }
+
   const nutritionData = await getNutritionProgress();
   const workoutData = await getCategoryProgress("Workout");
   const waterData = await getCategoryProgress("Water");

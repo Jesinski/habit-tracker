@@ -6,9 +6,17 @@ import Tile from "@/components/Tile";
 import { Database } from "@/types/database-generated.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    redirect("/login");
+  }
+
   const tomorrow = new Date();
   const yesterday = new Date();
   const { data } = await supabase

@@ -14,6 +14,7 @@ const MEALS = [
   { time: "7:00 PM", name: "5th Meal" },
 ];
 export default function Page() {
+  // todo: add check to see if user is logged
   const [meals, setMeals] = useState(MEALS);
 
   const [newMealName, setNewMealName] = useState("");
