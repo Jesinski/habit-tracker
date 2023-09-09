@@ -2,7 +2,7 @@
 import { Database } from "@/types/database-generated.types";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 
 type LoginFormData = {
   email: HTMLInputElement;
@@ -12,6 +12,19 @@ export default function Page() {
   const [error, setError] = useState<boolean>(false);
   const { push } = useRouter();
   const supabase = createClientComponentClient<Database>();
+
+  useEffect(() => {
+    const checkIfUserIsLogged = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        push("/");
+      }
+    };
+    checkIfUserIsLogged();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSignUp = async (e: BaseSyntheticEvent) => {
     e.preventDefault();

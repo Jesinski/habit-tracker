@@ -1,6 +1,8 @@
 "use client";
-import loginWithEmail from "@/lib/login";
-import { BaseSyntheticEvent, useState } from "react";
+import { Database } from "@/types/database-generated.types";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 
 type LoginFormData = {
   email: HTMLInputElement;
@@ -8,17 +10,32 @@ type LoginFormData = {
 };
 export default function Page() {
   const [error, setError] = useState<boolean>(false);
+  const { push } = useRouter();
+  const supabase = createClientComponentClient<Database>();
+
+  useEffect(() => {
+    const checkIfUserIsLogged = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        push("/");
+      }
+    };
+    checkIfUserIsLogged();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const signInWithEmail = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const formData = e.target.elements as LoginFormData;
 
     try {
-      const loggedUser = await loginWithEmail(
-        formData.email.value,
-        formData.password.value
-      );
-      console.log(loggedUser);
+      await supabase.auth.signInWithPassword({
+        email: formData.email.value,
+        password: formData.password.value,
+      });
+      push("/");
     } catch (err) {
       console.log(err);
       setError(true);
