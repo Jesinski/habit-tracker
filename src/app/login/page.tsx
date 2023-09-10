@@ -31,20 +31,13 @@ export default function Page() {
     const formData = e.target.elements as LoginFormData;
 
     try {
-      // const data = await handleLogin(
-      //   formData.email.value,
-      //   formData.password.value
-      // );
-      // const parsed = JSON.parse(data);
-
-      const { data } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email.value,
         password: formData.password.value,
       });
-      // if (!data.session) {
-      //   throw new Error("ok");
-      // }
-      // await supabase.auth.setSession(data.session);
+      if (!data || error) {
+        throw new Error("Could not Login");
+      }
       push("/");
     } catch (err) {
       console.log(err);

@@ -7,9 +7,7 @@ import { Database } from "@/types/database-generated.types";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-// NEXT_PUBLIC_SUPABASE_URL
-// NEXT_PUBLIC_SUPABASE_ANON_KEY
-// SUPABASE_SERVICE_KEY
+
 export default async function Page() {
   const supabase = createServerComponentSupabaseClient<Database>({
     supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

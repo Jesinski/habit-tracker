@@ -17,6 +17,11 @@ export default async function createProject(data: NewProjectData) {
   });
 
   const user = await supabase.auth.getUser();
+  if (!user || user.error) {
+    console.log(user.error);
+    throw new Error("Could not load User data");
+  }
+
   const start = DateTime.fromISO(data.startDate);
   const end = DateTime.fromISO(data.endDate);
   const diff = end.diff(start, "days").days;
@@ -26,7 +31,7 @@ export default async function createProject(data: NewProjectData) {
     .insert({
       start_date: data.startDate,
       end_date: data.endDate,
-      user_id: user.data.user?.id,
+      user_id: user.data.user.id,
     })
     .select()
     .single();
@@ -49,7 +54,7 @@ export default async function createProject(data: NewProjectData) {
         category: task.category,
         completed: task.completed,
         project_id: newProject.id,
-        user_id: user.data.user?.id,
+        user_id: user.data.user.id,
       };
       tasks.push(newTask);
     }
