@@ -1,13 +1,18 @@
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import { Database } from "@/types/database-generated.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
   const {
     data: { session },
   } = await supabase.auth.getSession();

@@ -3,13 +3,18 @@
 import { NewProjectData } from "@/components/NewProject";
 import { Database } from "@/types/database-generated.types";
 import { Tables } from "@/types/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { DateTime } from "luxon";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { DAILY_TEMPLATE } from "./dailyTasksTemplate";
 
 export default async function createProject(data: NewProjectData) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
 
   const start = DateTime.fromISO(data.startDate);
   const end = DateTime.fromISO(data.endDate);

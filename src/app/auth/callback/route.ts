@@ -1,6 +1,6 @@
 import { Database } from "@/types/database-generated.types";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -8,7 +8,12 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get("code");
 
   if (code) {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerSupabaseClient<Database>({
+      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      headers: headers,
+      cookies: cookies,
+    });
     await supabase.auth.exchangeCodeForSession(code);
   }
 

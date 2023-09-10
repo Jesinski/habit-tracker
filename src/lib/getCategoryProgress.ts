@@ -1,11 +1,16 @@
 "use server";
 import { Database } from "@/types/database-generated.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import getPercentages from "./getPercentages";
 
 export default async function getCategoryProgress(category: string) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
   const { data: categoryData, error } = await supabase.rpc(
     "get_category_progress",
     {

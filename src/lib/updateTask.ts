@@ -1,8 +1,8 @@
 "use server";
 
 import { Database } from "@/types/database-generated.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 
 type Payload = {
   id: string;
@@ -10,7 +10,12 @@ type Payload = {
 };
 
 export default async function updateTask(data: Payload) {
-  const dbClient = createServerComponentClient<Database>({ cookies });
+  const dbClient = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
 
   await dbClient
     .from("tasks")
