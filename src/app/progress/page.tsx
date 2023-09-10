@@ -6,11 +6,17 @@ import getNutritionProgress from "@/lib/getNutritionProgress";
 import getOverallProgress from "@/lib/getOverallProgress";
 import getSleepProgress from "@/lib/getSleepProgress";
 import { Database } from "@/types/database-generated.types";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const supabase = createBrowserSupabaseClient<Database>();
+  const supabase = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
   const {
     data: { session },
   } = await supabase.auth.getSession();
