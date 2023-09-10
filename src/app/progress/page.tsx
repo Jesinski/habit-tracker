@@ -5,14 +5,48 @@ import getCategoryProgress from "@/lib/getCategoryProgress";
 import getNutritionProgress from "@/lib/getNutritionProgress";
 import getOverallProgress from "@/lib/getOverallProgress";
 import getSleepProgress from "@/lib/getSleepProgress";
+import { Database } from "@/types/database-generated.types";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const nutritionData = await getNutritionProgress();
-  const workoutData = await getCategoryProgress("Workout");
-  const waterData = await getCategoryProgress("Water");
-  const sleepData = await getSleepProgress();
-  const overallProgress = await getOverallProgress();
+  const supabase = createServerComponentSupabaseClient<Database>({
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    headers: headers,
+    cookies: cookies,
+  });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    redirect("/login");
+  }
 
+  let nutritionData;
+  let workoutData;
+  let waterData;
+  let sleepData;
+  let overallProgress;
+  try {
+    nutritionData = await getNutritionProgress();
+    workoutData = await getCategoryProgress("Workout");
+    waterData = await getCategoryProgress("Water");
+    sleepData = await getSleepProgress();
+    overallProgress = await getOverallProgress();
+  } catch {
+    return (
+      <>
+        <Header title="Progress" />
+        <Content>
+          <div className="flex flex-col space-y-2">
+            <h1>No project found!</h1>
+          </div>
+        </Content>
+      </>
+    );
+  }
   return (
     <>
       <Header title="Progress" />

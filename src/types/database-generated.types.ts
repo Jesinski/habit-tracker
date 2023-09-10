@@ -14,18 +14,28 @@ export interface Database {
           end_date: string
           id: string
           start_date: string
+          user_id: string
         }
         Insert: {
           end_date: string
           id?: string
           start_date: string
+          user_id: string
         }
         Update: {
           end_date?: string
           id?: string
           start_date?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_id_fk"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       tasks: {
         Row: {
@@ -35,6 +45,7 @@ export interface Database {
           name: string
           project_id: string
           time: string
+          user_id: string
         }
         Insert: {
           category: string
@@ -43,6 +54,7 @@ export interface Database {
           name: string
           project_id: string
           time: string
+          user_id: string
         }
         Update: {
           category?: string
@@ -51,12 +63,19 @@ export interface Database {
           name?: string
           project_id?: string
           time?: string
+          user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "project_id_fk"
             columns: ["project_id"]
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_id_fk"
+            columns: ["user_id"]
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
