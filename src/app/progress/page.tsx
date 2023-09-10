@@ -24,12 +24,29 @@ export default async function Page() {
     redirect("/login");
   }
 
-  const nutritionData = await getNutritionProgress();
-  const workoutData = await getCategoryProgress("Workout");
-  const waterData = await getCategoryProgress("Water");
-  const sleepData = await getSleepProgress();
-  const overallProgress = await getOverallProgress();
-
+  let nutritionData;
+  let workoutData;
+  let waterData;
+  let sleepData;
+  let overallProgress;
+  try {
+    nutritionData = await getNutritionProgress();
+    workoutData = await getCategoryProgress("Workout");
+    waterData = await getCategoryProgress("Water");
+    sleepData = await getSleepProgress();
+    overallProgress = await getOverallProgress();
+  } catch {
+    return (
+      <>
+        <Header title="Progress" />
+        <Content>
+          <div className="flex flex-col space-y-2">
+            <h1>No project found!</h1>
+          </div>
+        </Content>
+      </>
+    );
+  }
   return (
     <>
       <Header title="Progress" />

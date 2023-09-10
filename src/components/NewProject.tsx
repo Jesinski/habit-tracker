@@ -1,6 +1,7 @@
 "use client";
 
 import createProject from "@/lib/createProject";
+import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent } from "react";
 type NewProjectFormData = {
   startDate: HTMLInputElement;
@@ -13,6 +14,7 @@ export type NewProjectData = {
 };
 
 export default function NewProject() {
+  const router = useRouter();
   const createNewProject = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const formData = e.target.elements as NewProjectFormData;
@@ -22,6 +24,7 @@ export default function NewProject() {
         startDate: formData.startDate.value,
         endDate: formData.endDate.value,
       });
+      router.refresh();
     } catch (err) {
       console.log(err);
     }
