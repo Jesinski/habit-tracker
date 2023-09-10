@@ -14,7 +14,7 @@ export default async function getNutritionProgress() {
 
   const project = await supabase.from("projects").select("*").limit(1).single();
   if (!project.data) {
-    console.log(project.data);
+    console.log(project.error);
     throw new Error("Could not load User Project");
   }
 

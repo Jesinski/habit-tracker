@@ -14,7 +14,7 @@ export default async function getSleepProgress() {
 
   const project = await supabase.from("projects").select("*").limit(1).single();
   if (!project.data) {
-    console.log(project.data);
+    console.log(project.error);
     throw new Error("Could not load User Project");
   }
 
@@ -28,7 +28,6 @@ export default async function getSleepProgress() {
   }
 
   const completed = sleep.length;
-  console.log(completed);
   const endDate = DateTime.fromJSDate(new Date(project.data.end_date));
   const startDate = DateTime.fromJSDate(new Date(project.data.start_date));
   const today = DateTime.now();
@@ -37,7 +36,6 @@ export default async function getSleepProgress() {
   const remaining = Math.floor(endDate.diff(today, "days").days);
 
   const data = [completed, missed, remaining];
-  console.log(data);
   const percentages = getPercentages(data);
   return {
     labels: ["Done", "Missed", "Remaining"],

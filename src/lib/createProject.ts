@@ -17,7 +17,6 @@ export default async function createProject(data: NewProjectData) {
   });
 
   const user = await supabase.auth.getUser();
-  console.log(user);
   const start = DateTime.fromISO(data.startDate);
   const end = DateTime.fromISO(data.endDate);
   const diff = end.diff(start, "days").days;
