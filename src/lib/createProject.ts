@@ -16,6 +16,7 @@ export default async function createProject(data: NewProjectData) {
     cookies: cookies,
   });
 
+  const user = await supabase.auth.getUser();
   const start = DateTime.fromISO(data.startDate);
   const end = DateTime.fromISO(data.endDate);
   const diff = end.diff(start, "days").days;
@@ -25,6 +26,7 @@ export default async function createProject(data: NewProjectData) {
     .insert({
       start_date: data.startDate,
       end_date: data.endDate,
+      user_id: user.data.user?.id,
     })
     .select()
     .single();
@@ -47,6 +49,7 @@ export default async function createProject(data: NewProjectData) {
         category: task.category,
         completed: task.completed,
         project_id: newProject.id,
+        user_id: user.data.user?.id,
       };
       tasks.push(newTask);
     }
