@@ -1,6 +1,6 @@
 "use client";
 import { Database } from "@/types/database-generated.types";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
 import { BaseSyntheticEvent, useEffect, useState } from "react";
 
@@ -11,7 +11,10 @@ type LoginFormData = {
 export default function Page() {
   const [error, setError] = useState<boolean>(false);
   const { push } = useRouter();
-  const supabase = createBrowserSupabaseClient<Database>();
+  const supabase = createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   useEffect(() => {
     const checkIfUserIsLogged = async () => {

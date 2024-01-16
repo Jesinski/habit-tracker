@@ -10,7 +10,7 @@
     "generate-types": "supabase gen types typescript --project-id heiqniglkasrlnirftdi > src/types/database-generated.types.ts"
   },
   "dependencies": {
-    "@supabase/auth-helpers-nextjs": "^0.6.0",
+    "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.33.1",
     "@types/node": "18.15.11",
     "@types/react": "^18.2.48",

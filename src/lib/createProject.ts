@@ -1,20 +1,26 @@
 "use server";
 
 import { NewProjectData } from "@/components/NewProject";
-import { Database } from "@/types/database-generated.types";
 import { Tables } from "@/types/database.types";
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createServerClient } from "@supabase/ssr";
 import { DateTime } from "luxon";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { DAILY_TEMPLATE } from "./dailyTasksTemplate";
 
 export default async function createProject(data: NewProjectData) {
-  const supabase = createServerComponentSupabaseClient<Database>({
-    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    headers: headers,
-    cookies: cookies,
-  });
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+      },
+    }
+  );
 
   const user = await supabase.auth.getUser();
   if (!user || user.error) {
